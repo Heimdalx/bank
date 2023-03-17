@@ -12,5 +12,6 @@ namespace Bank.Domain.Interfaces.IRepositories
         Task<List<Movimiento>> ObtenerTodosAsync();
         Task<Movimiento> CrearAsync(Movimiento movimiento);
         Task<Movimiento> FindFirstOrDefaultAsync(int id);
+        Task<List<Movimiento>> ObtenerMovimientosPorCuenta( int idCliente, DateTime fecha);
     }
 }

@@ -74,8 +74,6 @@ namespace Bank.API.Repositories
             }
         }
 
-
-
         public async Task<List<Cliente>> ObtenerTodosAsync()
         {
             return await _dataContext.Clientes

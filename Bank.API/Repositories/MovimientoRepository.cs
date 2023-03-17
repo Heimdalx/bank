@@ -4,11 +4,6 @@ using Bank.Domain.Exceptions;
 using Bank.Domain.Interfaces.IRepositories;
 using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bank.API.Repositories
 {
@@ -46,7 +41,23 @@ namespace Bank.API.Repositories
             catch (DbUpdateException ex)
             {
 
-                throw new RepositoryException("Error al consultar el cliente", ex);
+                throw new RepositoryException("Error al consultar el movimiento", ex);
+            }
+        }
+
+        public async Task<List<Movimiento>> ObtenerMovimientosPorCuenta(int idCliente, DateTime fecha)
+        {
+            try
+            {
+                return await _dataContext.Movimientos
+                        .Include(m => m.Cuenta)
+                        .ThenInclude(c => c.Cliente)
+                        .Where(m => m.Cuenta!.ClienteId == idCliente && m.Fecha.Date == fecha.Date)
+                        .ToListAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error al consultar los movimientos", ex);
             }
         }
 

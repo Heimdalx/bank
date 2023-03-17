@@ -40,6 +40,12 @@ namespace Bank.Domain.UseCases
                     throw new UseCaseException($"Saldo no disponible");
                 }
                 cuenta.SaldoInicial -= movimiento.Valor;
+                movimiento.Valor = movimiento.Valor * -1;
+                movimiento.Saldo = cuenta.SaldoInicial;
+            }
+            else
+            {
+                cuenta.SaldoInicial += movimiento.Valor;
                 movimiento.Saldo = cuenta.SaldoInicial;
             }
 

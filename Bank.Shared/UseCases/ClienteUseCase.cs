@@ -9,10 +9,14 @@ namespace Bank.Domain.UseCases
     public class ClienteUseCase : IClienteUseCase
     {
         private readonly IClienteRepository _repository;
+        private readonly ICuentaRepository _cuentaRepository;
+        private readonly IMovimientoRepository _movimientoRepository;
 
-        public ClienteUseCase(IClienteRepository repository)
+        public ClienteUseCase(IClienteRepository repository, ICuentaRepository cuentaRepository, IMovimientoRepository movimientoRepository)
         {
             _repository = repository;
+            _cuentaRepository = cuentaRepository;
+            _movimientoRepository = movimientoRepository;
         }
 
         public async Task<Cliente> ActualizarCliente(Cliente cliente)
@@ -62,6 +66,17 @@ namespace Bank.Domain.UseCases
         public async Task<Cliente> FindCliente(int id)
         {
             return await _repository.FindFirstOrDefaultAsync(id);
+        }
+
+        public async Task<List<Movimiento>> GenerarReporte(DateTime fecha, int id)
+        {
+            Cliente cliente  = await _repository.FindFirstOrDefaultAsync(id);
+
+            var cuentas = await _cuentaRepository.ObtenerCuentasPorCliente(cliente.Id);
+
+            var movimientos = await _movimientoRepository.ObtenerMovimientosPorCuenta( cliente.Id, fecha);
+
+            return movimientos;
         }
     }
 }

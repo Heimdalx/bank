@@ -14,5 +14,7 @@ namespace Bank.Domain.Interfaces.IRepositories
         Task<Cuenta> ActualizarAsync(Cuenta cuenta);
         Task EliminarAsync(Cuenta cuenta);
         Task<Cuenta> FindFirstOrDefaultAsync(int id);
+
+        Task<List<Cuenta>> ObtenerCuentasPorCliente(int id);
     }
 }

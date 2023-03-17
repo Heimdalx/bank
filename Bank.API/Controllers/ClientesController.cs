@@ -102,5 +102,27 @@ namespace Bank.API.Controllers
             }
 
         }
+
+        [HttpGet("{clienteId}/movimientos")]
+        public async Task<ActionResult<List<Movimiento>>> GenerarReporte(int clienteId , [FromQuery] DateTime fecha)
+        {
+            try
+            {
+                var movimientos = await _clienteUseCase.GenerarReporte(fecha, clienteId);
+                if (movimientos.Any())
+                {
+                    return Ok(movimientos);
+                }
+                else
+                {
+                    return NotFound($"No se encontraron movimientos para la fecha {fecha} en la cuenta del cliente {clienteId}");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

@@ -14,5 +14,6 @@ namespace Bank.Domain.Interfaces.IUseCases
         Task<Cliente?> EliminarCliente(int id);
         Task<Cliente> FindCliente(int id);
         Task<List<Cliente>> ObtenerClientes();
+        Task<List<Movimiento>> GenerarReporte(DateTime fecha, int id);
     }
 }

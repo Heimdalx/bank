@@ -63,7 +63,7 @@ namespace Bank.API.Repositories
             try
             {
                 return await _dataContext.Cuentas
-                    .Include(cuenta => cuenta.Movimientos)
+                    .Include(cuenta => cuenta.Movimientos!)
                     .FirstOrDefaultAsync(cuenta => cuenta.Id == id);
             }
             catch (DbUpdateException ex)
@@ -72,7 +72,20 @@ namespace Bank.API.Repositories
             }
         }
 
-
+        public async Task<List<Cuenta>> ObtenerCuentasPorCliente(int id)
+        {
+            try
+            {
+                return await _dataContext.Cuentas
+                    .Include(cuenta => cuenta.Movimientos!)
+                    .Where(cuenta => cuenta.ClienteId == id)
+                     .ToListAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error al consultar la cuenta", ex);
+            }
+        }
 
         public async Task<List<Cuenta>> ObtenerTodosAsync()
         {
