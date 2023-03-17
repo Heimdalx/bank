@@ -19,7 +19,7 @@ namespace Bank.API.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Cliente>().HasIndex(c => c.Id).IsUnique();
             modelBuilder.Entity<Cuenta>().HasIndex("ClienteId", "NumeroCuenta").IsUnique();
-            modelBuilder.Entity<Movimiento>().HasIndex("CuentaId","Id").IsUnique();
+            modelBuilder.Entity<Movimiento>().HasIndex("CuentaId", "Id").IsUnique();
         }
     }
 }

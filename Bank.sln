@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank.Shared", "Bank.Shared\Bank.Shared.csproj", "{4410787D-5644-4E9A-A6D7-3483F403B2EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.Domain", "Bank.Shared\Bank.Domain.csproj", "{4410787D-5644-4E9A-A6D7-3483F403B2EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank.API", "Bank.API\Bank.API.csproj", "{345A7077-AD35-4203-9A9F-CCAFA706AB1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank.API", "Bank.API\Bank.API.csproj", "{345A7077-AD35-4203-9A9F-CCAFA706AB1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
