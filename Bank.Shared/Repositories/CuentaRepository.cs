@@ -1,5 +1,6 @@
 ﻿using Bank.Domain.Data;
 using Bank.Domain.Exceptions;
+using Bank.Domain.Interfaces.IRepositories;
 using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -70,13 +71,23 @@ namespace Bank.Domain.Repositories
             }
             catch (DbUpdateException ex)
             {
-                throw new RepositoryException("Error al consultar el cliente", ex);
+                throw new RepositoryException("Error al consultar la cuenta", ex);
             }
         }
 
-        public Task<Cuenta> ObtenerPorIdAsync(int id)
+        public async Task<Cuenta> ObtenerPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _dataContext.Cuentas
+                      .Include(cuenta => cuenta.Movimientos)
+                      .FirstOrDefaultAsync(cliente => cliente.Id == id);
+            }
+            catch (DbUpdateException ex)
+            {
+
+                throw new RepositoryException("Error al consultar el cliente", ex);
+            }
         }
 
         public async Task<List<Cuenta>> ObtenerTodosAsync()

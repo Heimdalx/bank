@@ -1,5 +1,6 @@
 using Bank.Domain.Data;
-using Bank.Domain.Interfaces;
+using Bank.Domain.Interfaces.IRepositories;
+using Bank.Domain.Interfaces.IUseCases;
 using Bank.Domain.Repositories;
 using Bank.Domain.UseCases;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(dc => dc.UseSqlServer("name= DbConnection"));
 builder.Services.AddScoped<IClienteUseCase, ClienteUseCase>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<ICuentaUseCase, CuentaUseCase>();
+builder.Services.AddScoped<ICuentaRepository, CuentaRepository>();
 
 var app = builder.Build();
 

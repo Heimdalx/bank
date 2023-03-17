@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank.Domain.Interfaces
+namespace Bank.Domain.Interfaces.IUseCases
 {
     public interface IClienteUseCase
     {

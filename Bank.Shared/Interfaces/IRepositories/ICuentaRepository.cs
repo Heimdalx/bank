@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank.Domain.Repositories
+namespace Bank.Domain.Interfaces.IRepositories
 {
     public interface ICuentaRepository
     {

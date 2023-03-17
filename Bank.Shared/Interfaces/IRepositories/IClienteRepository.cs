@@ -1,6 +1,6 @@
 ﻿using Bank.Shared.Entities;
 
-namespace Bank.Domain.Interfaces
+namespace Bank.Domain.Interfaces.IRepositories
 {
     public interface IClienteRepository
     {

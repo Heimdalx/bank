@@ -1,6 +1,6 @@
 ﻿using Bank.Domain.Data;
 using Bank.Domain.Exceptions;
-using Bank.Domain.Interfaces;
+using Bank.Domain.Interfaces.IRepositories;
 using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,5 +1,5 @@
 ﻿using Bank.Domain.Exceptions;
-using Bank.Domain.Interfaces;
+using Bank.Domain.Interfaces.IUseCases;
 using Bank.Domain.UseCases;
 using Bank.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
