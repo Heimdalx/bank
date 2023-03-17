@@ -1,4 +1,7 @@
-using Bank.API.Data;
+using Bank.Domain.Data;
+using Bank.Domain.Interfaces;
+using Bank.Domain.Repositories;
+using Bank.Domain.UseCases;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -13,6 +16,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(dc => dc.UseSqlServer("name= DbConnection"));
+builder.Services.AddScoped<IClienteUseCase, ClienteUseCase>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
 var app = builder.Build();
 

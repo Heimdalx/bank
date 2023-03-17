@@ -1,7 +1,7 @@
 ﻿using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bank.API.Data
+namespace Bank.Domain.Data
 {
     public class DataContext : DbContext
     {

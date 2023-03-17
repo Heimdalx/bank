@@ -1,4 +1,5 @@
-﻿using Bank.API.Data;
+﻿using Bank.Domain.Interfaces;
+using Bank.Domain.UseCases;
 using Bank.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,23 +13,20 @@ namespace Bank.API.Controllers
     public class ClientesController : ControllerBase
     {
 
-        private readonly DataContext _dataContext;
+        private readonly IClienteUseCase _clienteUseCase;
 
-        public ClientesController(DataContext dataContext)
+        public ClientesController(IClienteUseCase clienteUseCase)
         {
-            _dataContext= dataContext;
+            _clienteUseCase = clienteUseCase;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAsync()
         {
-            return Ok(await _dataContext.Clientes
-                .Include(cliente => cliente.Cuentas!)
-               // .ThenInclude(cuenta => cuenta.Movimientos)
-                .ToListAsync());
+            return Ok(await _clienteUseCase.ObtenerClientes());
         }
 
-        [HttpPost]
+       /* [HttpPost]
         public async Task<ActionResult> PostAsync(Cliente cliente)
         {
             try
@@ -85,6 +83,6 @@ namespace Bank.API.Controllers
             _dataContext.Remove(cliente);
             await _dataContext.SaveChangesAsync();
             return NoContent();
-        }
+        }*/
     }
 }

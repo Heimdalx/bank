@@ -1,14 +1,11 @@
-﻿using Bank.API.Data;
-using Bank.Shared.Entities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.API.Controllers
 {
     [ApiController]
     [Route("/api/cuentas")]
     public class CuentasController : ControllerBase
-    {
+    {/*
 
         private readonly DataContext _dataContext;
 
@@ -86,6 +83,6 @@ namespace Bank.API.Controllers
             _dataContext.Remove(cuenta);
             await _dataContext.SaveChangesAsync();
             return NoContent();
-        }
+        }*/
     }
 }
