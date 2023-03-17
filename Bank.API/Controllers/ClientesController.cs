@@ -23,7 +23,7 @@ namespace Bank.API.Controllers
         public async Task<ActionResult> GetAsync()
         {
             return Ok(await _dataContext.Clientes
-               // .Include(cliente => cliente.Cuentas!)
+                .Include(cliente => cliente.Cuentas!)
                // .ThenInclude(cuenta => cuenta.Movimientos)
                 .ToListAsync());
         }
@@ -41,7 +41,7 @@ namespace Bank.API.Controllers
             {
                 if (ex.InnerException!.Message.Contains("duplicate"))
                 {
-                    return BadRequest($"Ya existe un cliente con el id: {cliente.ClienteId}");
+                    return BadRequest($"Ya existe un cliente con el id: {cliente.Id}");
                 }
                 return BadRequest(ex.Message);
             }
@@ -64,7 +64,7 @@ namespace Bank.API.Controllers
             {
                 if (ex.InnerException!.Message.Contains("duplicate"))
                 {
-                    return BadRequest($"Ya existe un cliente con el id: {cliente.ClienteId}");
+                    return BadRequest($"Ya existe un cliente con el id: {cliente.Id}");
                 }
                 return BadRequest(ex.Message);
             }
@@ -77,7 +77,7 @@ namespace Bank.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var cliente = await _dataContext.Clientes.FirstOrDefaultAsync(cliente => cliente.ClienteId == id);
+            var cliente = await _dataContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
             if (cliente == null)
             {
                 return NotFound();

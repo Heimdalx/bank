@@ -17,7 +17,7 @@ namespace Bank.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Cliente>().HasIndex(c => c.ClienteId).IsUnique();
+            modelBuilder.Entity<Cliente>().HasIndex(c => c.Id).IsUnique();
             modelBuilder.Entity<Cuenta>().HasIndex("ClienteId", "NumeroCuenta").IsUnique();
             modelBuilder.Entity<Movimiento>().HasIndex("CuentaId","Id").IsUnique();
         }
