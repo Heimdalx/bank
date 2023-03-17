@@ -26,14 +26,12 @@ namespace Bank.API.Controllers
             return Ok(await _clienteUseCase.ObtenerClientes());
         }
 
-       /* [HttpPost]
+        [HttpPost]
         public async Task<ActionResult> PostAsync(Cliente cliente)
         {
             try
             {
-                _dataContext.Add(cliente);
-                await _dataContext.SaveChangesAsync();
-                return Ok(cliente);
+                return Ok(await _clienteUseCase.GuardarCliente(cliente));
             }
             catch (DbUpdateException ex)
             {
@@ -54,9 +52,7 @@ namespace Bank.API.Controllers
         {
             try
             {
-                _dataContext.Update(cliente);
-                await _dataContext.SaveChangesAsync();
-                return Ok(cliente);
+                return Ok(_clienteUseCase.ActualizarCliente(cliente));
             }
             catch (DbUpdateException ex)
             {
@@ -75,14 +71,12 @@ namespace Bank.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var cliente = await _dataContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
+            var cliente = await _clienteUseCase.EliminarCliente(id);
             if (cliente == null)
             {
                 return NotFound();
             }
-            _dataContext.Remove(cliente);
-            await _dataContext.SaveChangesAsync();
             return NoContent();
-        }*/
+        }
     }
 }

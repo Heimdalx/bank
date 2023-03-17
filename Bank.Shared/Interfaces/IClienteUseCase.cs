@@ -10,7 +10,8 @@ namespace Bank.Domain.Interfaces
     public interface IClienteUseCase
     {
         Task<Cliente> GuardarCliente(Cliente cliente);
-        Task<Cliente> EliminarCliente(Cliente cliente);
+        Task<Cliente> ActualizarCliente(Cliente cliente);
+        Task<Cliente?> EliminarCliente(int id);
         Task<List<Cliente>> ObtenerClientes();
     }
 }

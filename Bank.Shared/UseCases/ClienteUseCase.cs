@@ -14,20 +14,32 @@ namespace Bank.Domain.UseCases
             _repository = repository;
         }
 
-        public  Task<Cliente> EliminarCliente(Cliente cliente)
+        public async Task<Cliente> ActualizarCliente(Cliente cliente)
         {
-            throw new NotImplementedException();
+           return await _repository.ActualizarAsync(cliente);
         }
 
-        public  Task<Cliente> GuardarCliente(Cliente cliente)
+        public async Task<Cliente?> EliminarCliente(int id)
         {
-            throw new NotImplementedException();
+            var cliente = await _repository.FindFirstOrDefaultAsync(id);
+            if (cliente == null)
+            {
+                return null;
+            }
+            await _repository.EliminarAsync(cliente);
+            return cliente;
+        }
+
+        public async Task<Cliente> GuardarCliente(Cliente cliente)
+        {
+           return await _repository.CrearAsync(cliente);
         }
 
         public async Task<List<Cliente>> ObtenerClientes()
         {
             return await _repository.ObtenerTodosAsync();
         }
+
 
         
     }

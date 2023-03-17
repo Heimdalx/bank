@@ -7,7 +7,8 @@ namespace Bank.Domain.Interfaces
         Task<Cliente> ObtenerPorIdAsync(int id);
         Task<List<Cliente>> ObtenerTodosAsync();
         Task<Cliente> CrearAsync(Cliente cliente);
-        Task ActualizarAsync(Cliente cliente);
+        Task<Cliente> ActualizarAsync(Cliente cliente);
         Task EliminarAsync(Cliente cliente);
+        Task<Cliente> FindFirstOrDefaultAsync(int id);
     }
 }

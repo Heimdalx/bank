@@ -14,19 +14,32 @@ namespace Bank.Domain.Repositories
             _dataContext = dataContext;
         }
 
-        public Task ActualizarAsync(Cliente cliente)
+        public async Task<Cliente> ActualizarAsync(Cliente cliente)
         {
-            throw new NotImplementedException();
+
+            _dataContext.Update(cliente);
+            await _dataContext.SaveChangesAsync();
+            return cliente;
+
         }
 
-        public Task<Cliente> CrearAsync(Cliente cliente)
+        public async Task<Cliente> CrearAsync(Cliente cliente)
         {
-            throw new NotImplementedException();
+             _dataContext.Add(cliente);
+            await  _dataContext.SaveChangesAsync();
+            return cliente;
         }
 
-        public Task EliminarAsync(Cliente cliente)
+        public async Task EliminarAsync(Cliente cliente)
         {
-            throw new NotImplementedException();
+
+            _dataContext.Remove(cliente);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task<Cliente> FindFirstOrDefaultAsync(int id)
+        {
+           return await _dataContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
         }
 
         public Task<Cliente> ObtenerPorIdAsync(int id)
@@ -41,5 +54,6 @@ namespace Bank.Domain.Repositories
                       .ThenInclude(cuenta => cuenta.Movimientos)
                        .ToListAsync();
         }
+
     }
 }
