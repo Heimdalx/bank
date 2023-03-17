@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Bank.Shared\Bank.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

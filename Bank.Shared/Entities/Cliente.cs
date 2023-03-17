@@ -4,7 +4,7 @@ namespace Bank.Shared.Entities
 {
     public class Cliente : Persona
     {
-        public string ClienteId { get; set; } = null!;
+        public int ClienteId { get; set; }
 
         [Display(Name = "Contrasena")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -14,5 +14,7 @@ namespace Bank.Shared.Entities
         [Display(Name = "Estado")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public bool Estado { get; set; }
+
+        public ICollection<Cuenta>? Cuentas { get; set; }
     }
 }

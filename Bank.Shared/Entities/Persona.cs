@@ -19,7 +19,6 @@ namespace Bank.Shared.Entities
 
         [Display(Name = "Edad")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [MaxLength(3, ErrorMessage = "El campo {0} no puede tener mas de {1} caracteres.")]
         public int Edad { get; set; }
 
         [Display(Name = "Identificacion")]
@@ -35,7 +34,7 @@ namespace Bank.Shared.Entities
         [Display(Name = "Telefono")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [MaxLength(10, ErrorMessage = "El campo {0} no puede tener mas de {1} caracteres.")]
-        public int Telefono { get; set; }
+        public string Telefono { get; set; } = null!;
 
 
 
