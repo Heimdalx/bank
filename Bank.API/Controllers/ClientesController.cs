@@ -90,7 +90,7 @@ namespace Bank.API.Controllers
                 {
                     return NotFound($"No se encontró ningún cliente con el id: {id}");
                 }
-                return Ok();
+                return Ok(cliente);
             }
             catch (UseCaseException ex)
             {
