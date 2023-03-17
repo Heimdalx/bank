@@ -1,4 +1,5 @@
 ﻿using Bank.Domain.Data;
+using Bank.Domain.Exceptions;
 using Bank.Domain.Interfaces;
 using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -16,23 +17,22 @@ namespace Bank.Domain.UseCases
 
         public async Task<Cliente> ActualizarCliente(Cliente cliente)
         {
-           return await _repository.ActualizarAsync(cliente);
+           
+            return await _repository.ActualizarAsync(cliente);
         }
 
         public async Task<Cliente?> EliminarCliente(int id)
         {
-            var cliente = await _repository.FindFirstOrDefaultAsync(id);
-            if (cliente == null)
-            {
-                return null;
-            }
+            Cliente cliente = await NoExisteClienteExcepcion(id);
             await _repository.EliminarAsync(cliente);
             return cliente;
         }
 
+
         public async Task<Cliente> GuardarCliente(Cliente cliente)
         {
-           return await _repository.CrearAsync(cliente);
+            await ExisteClienteExcepcion(cliente);
+            return await _repository.CrearAsync(cliente);
         }
 
         public async Task<List<Cliente>> ObtenerClientes()
@@ -40,7 +40,31 @@ namespace Bank.Domain.UseCases
             return await _repository.ObtenerTodosAsync();
         }
 
+        private async Task<Cliente> NoExisteClienteExcepcion(int id)
+        {
+            var cliente = await FindCliente(id);
+            if (cliente == null)
+            {
+                throw new ClienteException($"No existe un cliente con el id: {id}");
+            }
 
-        
+            return cliente;
+        }
+
+        private async Task ExisteClienteExcepcion(Cliente cliente)
+        {
+            if (await FindCliente(cliente.Id) != null)
+            {
+                throw new ClienteException($"Ya existe un cliente con el id: {cliente.Id}");
+            }
+        }
+
+        private async Task<Cliente> FindCliente(int id)
+        {
+            return await _repository.FindFirstOrDefaultAsync(id);
+        }
+
+
+
     }
 }

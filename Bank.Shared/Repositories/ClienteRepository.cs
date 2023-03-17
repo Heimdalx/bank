@@ -1,4 +1,5 @@
 ﻿using Bank.Domain.Data;
+using Bank.Domain.Exceptions;
 using Bank.Domain.Interfaces;
 using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -16,30 +17,57 @@ namespace Bank.Domain.Repositories
 
         public async Task<Cliente> ActualizarAsync(Cliente cliente)
         {
+            try
+            {
+                _dataContext.Update(cliente);
+                await _dataContext.SaveChangesAsync();
+                return cliente;
+            }
+            catch (DbUpdateException ex)
+            {
 
-            _dataContext.Update(cliente);
-            await _dataContext.SaveChangesAsync();
-            return cliente;
+                throw new RepositoryException($"No existe el cliente con id {cliente.Id}",ex );
+            }
 
         }
 
         public async Task<Cliente> CrearAsync(Cliente cliente)
         {
-             _dataContext.Add(cliente);
-            await  _dataContext.SaveChangesAsync();
-            return cliente;
+            try
+            {
+                _dataContext.Add(cliente);
+                await _dataContext.SaveChangesAsync();
+                return cliente;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error al agregar el cliente", ex);
+            }
         }
 
         public async Task EliminarAsync(Cliente cliente)
         {
-
-            _dataContext.Remove(cliente);
-            await _dataContext.SaveChangesAsync();
+            try
+            {
+                _dataContext.Remove(cliente);
+                await _dataContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error al eliminar el cliente", ex);
+            }
         }
 
         public async Task<Cliente> FindFirstOrDefaultAsync(int id)
         {
-           return await _dataContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
+            try
+            {
+                return await _dataContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error al consultar el cliente", ex);
+            }
         }
 
         public Task<Cliente> ObtenerPorIdAsync(int id)

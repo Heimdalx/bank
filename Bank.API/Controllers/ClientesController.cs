@@ -1,4 +1,5 @@
-﻿using Bank.Domain.Interfaces;
+﻿using Bank.Domain.Exceptions;
+using Bank.Domain.Interfaces;
 using Bank.Domain.UseCases;
 using Bank.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -33,17 +34,13 @@ namespace Bank.API.Controllers
             {
                 return Ok(await _clienteUseCase.GuardarCliente(cliente));
             }
-            catch (DbUpdateException ex)
+            catch (ClienteException ex)
             {
-                if (ex.InnerException!.Message.Contains("duplicate"))
-                {
-                    return BadRequest($"Ya existe un cliente con el id: {cliente.Id}");
-                }
                 return BadRequest(ex.Message);
             }
-            catch (Exception ex)
+            catch (RepositoryException ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -52,31 +49,35 @@ namespace Bank.API.Controllers
         {
             try
             {
-                return Ok(_clienteUseCase.ActualizarCliente(cliente));
+                return Ok(await _clienteUseCase.ActualizarCliente(cliente));
             }
-            catch (DbUpdateException ex)
-            {
-                if (ex.InnerException!.Message.Contains("duplicate"))
-                {
-                    return BadRequest($"Ya existe un cliente con el id: {cliente.Id}");
-                }
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
+            catch (ClienteException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (RepositoryException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var cliente = await _clienteUseCase.EliminarCliente(id);
-            if (cliente == null)
+            try
             {
-                return NotFound();
+                var cliente = await _clienteUseCase.EliminarCliente(id);
+                return NoContent();
             }
-            return NoContent();
+            catch(ClienteException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (RepositoryException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+           
         }
     }
 }
