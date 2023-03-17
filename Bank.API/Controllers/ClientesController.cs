@@ -34,7 +34,7 @@ namespace Bank.API.Controllers
             {
                 return Ok(await _clienteUseCase.GuardarCliente(cliente));
             }
-            catch (ClienteException ex)
+            catch (UseCaseException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -51,7 +51,7 @@ namespace Bank.API.Controllers
             {
                 return Ok(await _clienteUseCase.ActualizarCliente(cliente));
             }
-            catch (ClienteException ex)
+            catch (UseCaseException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -66,10 +66,10 @@ namespace Bank.API.Controllers
         {
             try
             {
-                var cliente = await _clienteUseCase.EliminarCliente(id);
+                await _clienteUseCase.EliminarCliente(id);
                 return NoContent();
             }
-            catch(ClienteException ex)
+            catch(UseCaseException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -78,6 +78,29 @@ namespace Bank.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
            
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetAsync(int id)
+        {
+            try
+            {
+                var cliente = await _clienteUseCase.FindCliente(id);
+                if (cliente == null)
+                {
+                    return NotFound($"No se encontró ningún cliente con el id: {id}");
+                }
+                return Ok();
+            }
+            catch (UseCaseException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (RepositoryException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
         }
     }
 }

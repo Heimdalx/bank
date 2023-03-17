@@ -45,7 +45,7 @@ namespace Bank.Domain.UseCases
             var cliente = await FindCliente(id);
             if (cliente == null)
             {
-                throw new ClienteException($"No existe un cliente con el id: {id}");
+                throw new UseCaseException($"No existe un cliente con el id: {id}");
             }
 
             return cliente;
@@ -55,16 +55,13 @@ namespace Bank.Domain.UseCases
         {
             if (await FindCliente(cliente.Id) != null)
             {
-                throw new ClienteException($"Ya existe un cliente con el id: {cliente.Id}");
+                throw new UseCaseException($"Ya existe un cliente con el id: {cliente.Id}");
             }
         }
 
-        private async Task<Cliente> FindCliente(int id)
+        public async Task<Cliente> FindCliente(int id)
         {
             return await _repository.FindFirstOrDefaultAsync(id);
         }
-
-
-
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bank.Domain.Exceptions
 {
-    public class ClienteException : Exception
+    public class UseCaseException : Exception
     {
-        public ClienteException(string message) : base(message)
+        public UseCaseException(string message) : base(message)
         {
         }
     }

@@ -62,18 +62,19 @@ namespace Bank.Domain.Repositories
         {
             try
             {
-                return await _dataContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
+                return await _dataContext.Clientes
+                      .Include(cliente => cliente.Cuentas)
+                      .ThenInclude(cuenta => cuenta.Movimientos)
+                      .FirstOrDefaultAsync(cliente => cliente.Id == id);
             }
             catch (DbUpdateException ex)
             {
+                
                 throw new RepositoryException("Error al consultar el cliente", ex);
             }
         }
 
-        public Task<Cliente> ObtenerPorIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public async Task<List<Cliente>> ObtenerTodosAsync()
         {

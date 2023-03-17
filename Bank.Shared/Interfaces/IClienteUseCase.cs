@@ -12,6 +12,7 @@ namespace Bank.Domain.Interfaces
         Task<Cliente> GuardarCliente(Cliente cliente);
         Task<Cliente> ActualizarCliente(Cliente cliente);
         Task<Cliente?> EliminarCliente(int id);
+        Task<Cliente> FindCliente(int id);
         Task<List<Cliente>> ObtenerClientes();
     }
 }
