@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bank.Domain.Exceptions;
+using Bank.Domain.Interfaces.IUseCases;
+using Bank.Shared.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.API.Controllers
 {
@@ -6,46 +9,57 @@ namespace Bank.API.Controllers
     [Route("/api/movimientos")]
     public class MovimientosController : ControllerBase
     {
-        /*  private readonly DataContext _dataContext;
+        private readonly IMovimientoUseCase _movimientoUseCase;
 
-          public MovimientosController(DataContext dataContext)
-          {
-              _dataContext = dataContext;
-          }
+        public MovimientosController(IMovimientoUseCase movimientoUseCase)
+        {
+            _movimientoUseCase = movimientoUseCase;
+        }
+        [HttpGet]
+        public async Task<ActionResult> GetAsync()
+        {
+            return Ok(await _movimientoUseCase.ObtenerMovimientos());
+        }
 
-          [HttpGet]
-          public async Task<ActionResult> GetAsync()
-          {
-              return Ok(await _dataContext.Movimientos
-                  .ToListAsync());
-          }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetAsync(int id)
+        {
+            try
+            {
+                var cuenta = await _movimientoUseCase.FindMovimiento(id);
+                if (cuenta == null)
+                {
+                    return NotFound($"No se encontró ningúna cuenta con el id: {id}");
+                }
+                return Ok(cuenta);
+            }
+            catch (UseCaseException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (RepositoryException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
 
-          [HttpPost]
-          public async Task<ActionResult> PostAsync(Movimiento movimiento)
-          {
-              try
-              {
-                  _dataContext.Add(movimiento);
-                  await _dataContext.SaveChangesAsync();
-                  return Ok(movimiento);
-              }
-              catch (DbUpdateException ex)
-              {
-                  if (ex.InnerException!.Message.Contains("duplicate"))
-                  {
-                      return BadRequest($"Ya existe una cuenta con el id: {movimiento.Id}");
-                  }
-                  else if (ex.InnerException!.Message.Contains("FOREIGN"))
-                  {
-                      return BadRequest($"No existe una cuenta con id: {movimiento.CuentaId}");
-                  }
-                  return BadRequest(ex.Message);
-              }
-              catch (Exception ex)
-              {
-                  return BadRequest(ex.Message);
-              }
-          }*/
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostAsync(Movimiento movimiento)
+        {
+            try
+            {
+                return Ok(await _movimientoUseCase.GuardarMovimiento(movimiento));
+            }
+            catch (UseCaseException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (RepositoryException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
     }
 }

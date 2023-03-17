@@ -1,10 +1,10 @@
-﻿using Bank.Domain.Data;
+﻿using Bank.API.Data;
 using Bank.Domain.Exceptions;
 using Bank.Domain.Interfaces.IRepositories;
 using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bank.Domain.Repositories
+namespace Bank.API.Repositories
 {
     public class ClienteRepository : IClienteRepository
     {
@@ -26,7 +26,7 @@ namespace Bank.Domain.Repositories
             catch (DbUpdateException ex)
             {
 
-                throw new RepositoryException($"No existe el cliente con id {cliente.Id}",ex );
+                throw new RepositoryException($"No existe el cliente con id {cliente.Id}", ex);
             }
 
         }
@@ -69,12 +69,12 @@ namespace Bank.Domain.Repositories
             }
             catch (DbUpdateException ex)
             {
-                
+
                 throw new RepositoryException("Error al consultar el cliente", ex);
             }
         }
 
-       
+
 
         public async Task<List<Cliente>> ObtenerTodosAsync()
         {

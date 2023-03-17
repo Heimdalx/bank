@@ -1,15 +1,10 @@
-﻿using Bank.Domain.Data;
+﻿using Bank.API.Data;
 using Bank.Domain.Exceptions;
 using Bank.Domain.Interfaces.IRepositories;
 using Bank.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bank.Domain.Repositories
+namespace Bank.API.Repositories
 {
     public class CuentaRepository : ICuentaRepository
     {
@@ -67,7 +62,9 @@ namespace Bank.Domain.Repositories
         {
             try
             {
-                return await _dataContext.Cuentas.FirstOrDefaultAsync(cuenta => cuenta.Id == id);
+                return await _dataContext.Cuentas
+                    .Include(cuenta => cuenta.Movimientos)
+                    .FirstOrDefaultAsync(cuenta => cuenta.Id == id);
             }
             catch (DbUpdateException ex)
             {
@@ -75,20 +72,7 @@ namespace Bank.Domain.Repositories
             }
         }
 
-        public async Task<Cuenta> ObtenerPorIdAsync(int id)
-        {
-            try
-            {
-                return await _dataContext.Cuentas
-                      .Include(cuenta => cuenta.Movimientos)
-                      .FirstOrDefaultAsync(cliente => cliente.Id == id);
-            }
-            catch (DbUpdateException ex)
-            {
 
-                throw new RepositoryException("Error al consultar el cliente", ex);
-            }
-        }
 
         public async Task<List<Cuenta>> ObtenerTodosAsync()
         {

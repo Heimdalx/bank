@@ -1,9 +1,8 @@
-﻿using Bank.Domain.Data;
+﻿
 using Bank.Domain.Exceptions;
 using Bank.Domain.Interfaces.IRepositories;
 using Bank.Domain.Interfaces.IUseCases;
 using Bank.Shared.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bank.Domain.UseCases
 {
@@ -18,7 +17,7 @@ namespace Bank.Domain.UseCases
 
         public async Task<Cliente> ActualizarCliente(Cliente cliente)
         {
-           
+
             return await _repository.ActualizarAsync(cliente);
         }
 

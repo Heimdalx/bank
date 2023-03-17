@@ -1,7 +1,7 @@
-using Bank.Domain.Data;
+using Bank.API.Data;
 using Bank.Domain.Interfaces.IRepositories;
 using Bank.Domain.Interfaces.IUseCases;
-using Bank.Domain.Repositories;
+using Bank.API.Repositories;
 using Bank.Domain.UseCases;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -21,6 +21,8 @@ builder.Services.AddScoped<IClienteUseCase, ClienteUseCase>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ICuentaUseCase, CuentaUseCase>();
 builder.Services.AddScoped<ICuentaRepository, CuentaRepository>();
+builder.Services.AddScoped<IMovimientoUseCase, MovimientoUseCase>();
+builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
 
 var app = builder.Build();
 
